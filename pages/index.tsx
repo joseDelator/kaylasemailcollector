@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import { useState, Component} from 'react'
 import Head from 'next/head'
+import Router from 'next/router';
 
 import styles from '../styles/Home.module.css'
 
@@ -15,7 +16,7 @@ const Home: NextPage = () => {
     
    }
    const clientnamechange =(e:any)=>{
-    setclientname(e.target.value.toLocaleLowerCase());
+    setclientname(e.target.value);
     e.preventDefault();
 
 
@@ -23,23 +24,19 @@ const Home: NextPage = () => {
   const  CLICK =async() => {
     
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)){
-        console.log(email)
       const requestOptions = {
         method: 'POST',
         body: JSON.stringify({ email, clientname})
     };
     fetch('https://lambardies.herokuapp.com/emails', requestOptions)
         .then(res => {
-         console.log(res)
-      }) 
+ 
+      })
+        Router.push('/sucess')   
         setclientname(''),
         setemail('')
-
-   
-        
-        
     }else{ 
-      console.log(email)
+      alert("Input Valid Email")
     }
       
    }
